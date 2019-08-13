@@ -1,9 +1,9 @@
 ---
 - include_tasks: setup-RedHat.yml
-  when: ansible_os_family == 'RedHat'
+  when: docker_repo_online and ansible_os_family == 'RedHat'
 
 - include_tasks: setup-Debian.yml
-  when: ansible_os_family == 'Debian'
+  when: docker_repo_online and ansible_os_family == 'Debian'
 
 - name: Install Docker.
   package:
@@ -25,7 +25,7 @@
   meta: flush_handlers
 
 - include_tasks: docker-compose.yml
-  when: docker_install_compose
+  when: docker_repo_online and docker_install_compose
 
 - include_tasks: docker-users.yml
   when: docker_users
